@@ -96,7 +96,8 @@ Last measurement: <0,01 euro per day. unclear why. > shared (free-percieved) tie
 
 <center>•••</center>
 
-## Fast.io & Github
+## Github & Fast.io - [Deprecating]
+### Fast.io's free offering ends at 31st of December 2020 (announced October 14th).
 
 **Chosen components**
 
@@ -121,13 +122,13 @@ Add Time, Reset and Trouble and what happens then?
 
 
 
-**Daily total: 0,00 euro a day**
+~**Daily total: 0,00 euro a day**~
 
 <center>•••</center>
 
 
 
-## Keybase Sites
+## Keybase Sites (git variant)
 
 **Chosen components**:
 
@@ -138,7 +139,7 @@ Add Time, Reset and Trouble and what happens then?
    
 
 **Requirements check:**
-- A. SSL: yes and automatic cert renewal with letsencrypt by kbpbot [BROKEN]
+- A. SSL: yes and automatic cert renewal with letsencrypt by kbpbot 
 - B. Custom domain: yes, including root domain is possible with ALIAS record (NS1).
 - C. Privacy: yes, now browsing trough files by choosing private repo's and site does not allow directory listing by default.
 - D.+ Redundancy: none, also Always-On on cloudflare would break cert renewal. Though Cloudflare might ignore lets encrypt expired cert via Flexible SSL.
@@ -150,7 +151,7 @@ Add Time, Reset or Trouble and what happens then?
 
 - I. Continuity check: if no cloudflare proxy: automatic cert renewal, only zoom-doom as factor.
 - II. Reboot Check: no reset switch. unclear if the bot will take the site offline after a push. no caching.
-- III. Trouble check: completely dependent on Keybase, at least uncertainty is on the horizon. No cloudflare firewall protection if cloudflare proxy is off to keep kbpbot's cert renewal going.
+- III. Trouble check: completely dependent on Keybase, at least uncertainty is on the horizon. No cloudflare firewall protection if cloudflare proxy is off to keep kbpbot's cert renewal going. (Better topology available; read next.)
 
 
 
