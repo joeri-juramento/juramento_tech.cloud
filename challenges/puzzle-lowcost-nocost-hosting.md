@@ -96,7 +96,8 @@ Last measurement: <0,01 euro per day. unclear why. > shared (free-percieved) tie
 
 <center>•••</center>
 
-## Fast.io & Github
+## Github & Fast.io - [Deprecating]
+### Fast.io's free offering ends at 31st of December 2020 (announced October 14th).
 
 **Chosen components**
 
@@ -121,13 +122,13 @@ Add Time, Reset and Trouble and what happens then?
 
 
 
-**Daily total: 0,00 euro a day**
+~**Daily total: 0,00 euro a day**~
 
 <center>•••</center>
 
 
 
-## Keybase Sites
+## Keybase Sites (git variant)
 
 **Chosen components**:
 
@@ -138,9 +139,9 @@ Add Time, Reset and Trouble and what happens then?
    
 
 **Requirements check:**
-- A. SSL: yes and automatic cert renewal with letsencrypt by kbpbot [BROKEN]
+- A. SSL: yes and automatic cert renewal with letsencrypt by kbpbot 
 - B. Custom domain: yes, including root domain is possible with ALIAS record (NS1).
-- C. Privacy: yes, now browsing trough files by choosing private repo's and site does not allow directory listing by default.
+- C. Privacy: yes, no browsing through files by choosing private repo's and site does not allow directory listing by default.
 - D.+ Redundancy: none, also Always-On on cloudflare would break cert renewal. Though Cloudflare might ignore lets encrypt expired cert via Flexible SSL.
 
 
@@ -150,7 +151,8 @@ Add Time, Reset or Trouble and what happens then?
 
 - I. Continuity check: if no cloudflare proxy: automatic cert renewal, only zoom-doom as factor.
 - II. Reboot Check: no reset switch. unclear if the bot will take the site offline after a push. no caching.
-- III. Trouble check: completely dependent on Keybase, at least uncertainty is on the horizon. No cloudflare firewall protection if cloudflare proxy is off to keep kbpbot's cert renewal going.
+- III. Trouble check: completely dependent on Keybase, at least uncertainty is on the horizon. 
+  No cloudflare firewall protection if cloudflare proxy is off to keep kbpbot's cert renewal going. (Better topology available; see cloudflare worker.)
 
 
 
@@ -160,7 +162,97 @@ Add Time, Reset or Trouble and what happens then?
 
 
 
+## Keybase Sites (team files variant)
 
+**Chosen components**:
+
+1. Keybase Pages [Providing hosting and deployment method and ssl termination and cert renewal]
+2. Keybase Team files [Holding files, non-public]
+3. Keybase (sub)Team. [Provides controlled access to deployment-bot while keeping source files private]
+
+   
+
+**Requirements check:**
+- A. SSL: yes and automatic cert renewal with letsencrypt by kbpbot 
+- B. Custom domain: yes, including root domain is possible with ALIAS record (NS1).
+- C. Privacy: yes, no browsing through files by choosing keybase team files which are private and the site does not allow directory listing by default.
+- D.+ Redundancy: none, also Always-On on cloudflare would break cert renewal. Though cloudflare might ignore lets encrypt expired cert via Flexible SSL, kbpbot will complain about renewal issues. (Better topology available; see cloudflare worker.)
+
+
+
+**Scenario check**:
+Add Time, Reset or Trouble and what happens then?
+
+- I. Continuity check: if no cloudflare proxy: automatic cert renewal, uncertain what Zoom is going to do with Keybase.
+- II. Reboot Check: no reset switch. unclear if the bot will take the site offline after a push. no caching.
+- III. Trouble check: completely dependent on Keybase, at least uncertainty exist on the horizon due to Zoom take-over.
+  No cloudflare firewall protection if cloudflare proxy is off to keep kbpbot's cert renewal going.
+  (Better topology available; see cloudflare worker.)
+
+
+
+**Daily total: 0,00 euro a day**
+
+<center>•••</center>
+
+
+
+## Keybase Sites & Cloudflare Worker & Gitlab Pages
+
+**Chosen components**:
+
+1. [Providing hosting and deployment method and *backend* ssl termination and cert renewal]
+
+   1. Keybase Pages 
+   2. ~~Github Pages~~ 
+   3. Gitlab Pages 
+
+2. [Holding files, non-public]
+
+   1. Keybase git repo
+   2. ~~Github git repo~~ (@TJN Github pages does not work for free for *private* repo's, a requirement.)
+   3. Gitlab git repo
+
+3. [Provides controlled access to deployment(-bot) while keeping source files private]
+
+   1. Keybase (sub)Team + kbpot
+   2. Gitlab + yml
+
+4. [Load-balancing, firewall, cache: always-on, url-rewriting, frontend ssl-termination]
+
+   1. Cloudflare Worker [Load-balancing, url-rewriting]
+   2. Cloudflare DNS Proxy on [cache: always-on, SSL, firewall]
+
+5. [Subdomains]
+
+   1. Main domain (for visitors) blog.example.com or www.example.com
+   2. Backend domain with Cloudflare DNS proxy off: sitekeybase.example.com
+   3. Backend domain with Cloudflare DNS proxy off: sitegitlab.example.com
+   4. (Optional extension point: media.example.com for images you would like to save outside git repo.)
+
+   
+
+**Requirements check:**
+
+- A. SSL: yes and automatic cert renewal with letsencrypt by kbpbot and cloudflare cert flexible ssl & co.
+- B. Custom domain: yes, including root domain is possible with ALIAS record (NS1).
+- C. Privacy: yes, no browsing through files by choosing Keybase-team-files or Gitlab-private-repo which are private and the site does not allow directory listing by default. 
+- D.+ Redundancy: yes, Always-On on cloudflare. Backend cert-renewal will work.
+
+
+
+**Scenario check**:
+Add Time, Reset or Trouble and what happens then?
+
+- I. Continuity check: Future of Keybase backend uncertain due to zoom-takeover, but due to redundancy this is not a direct problem. Also, new backend options might be added later to the Cloudflare worker.
+- II. Reboot Check: Uncertain if Cloudflare Always-On caches material if the Worker rewrites URLs to a target without DNS Proxy; if not, the media.~ subdomain can help here. That being said, having two backend is better than one. User can push to two different git remotes. No expected downtime window detected when updating static site.
+- III. Trouble check: Cloudflare worker script it self is not version controlled, humans make mistakes. A limit on number of queries per day exist for a Worker (100 000 at moment of writing), but that should be more than enough for mortals.
+
+
+
+**Daily total: 0,00 euro a day**
+
+<center>•••</center>
 
 ----
 
